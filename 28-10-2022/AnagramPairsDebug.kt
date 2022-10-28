@@ -25,12 +25,16 @@ fun areAnagramPairs(string1: String, string2: String): Boolean {
 fun singleDigitAnagramCount(string: String): Int {
     var singleCount = 0
 
+    print("\nSingle anagram pairs: ")
     for (i in string.indices) {
         for (j in i + 1 until string.length) {
-            if (string[i] == string[j])
+            if (string[i] == string[j]) {
+                print("[${string[i]} , ${string[j]}] ")
                 singleCount++
+            }
         }
     }
+    println("\n")
 
     return singleCount
 }
@@ -41,17 +45,25 @@ fun variableDigitAnagramCount(string: String): Int {
     for (variableDigit in 2 until string.length) {
         var list = mutableListOf<String>()
 
-        for (subStringStartIndex in 0..string.length - variableDigit) {
+        for (subStringStartIndex in 0 .. string.length - variableDigit) {
             list.add(string.substring(subStringStartIndex, subStringStartIndex + variableDigit))
+            println("variable length $variableDigit: ${string.substring(subStringStartIndex, subStringStartIndex + variableDigit)}")
         }
 
+        println()
+
         for (index in 0 until list.size) {
-            for (subIndex in index + 1 until list.size) {
+            for (subIndex in index+1 until list.size) {
                 if (areAnagramPairs(list[index], list[subIndex])) {
+                    println("Anagram pair: [${list[index]} == ${list[subIndex]}]")
                     variableCount += 1
+                } else {
+                    println("Non-anagram pair: [${list[index]} != ${list[subIndex]}]")
                 }
             }
         }
+
+        println()
     }
 
     return variableCount
@@ -74,6 +86,6 @@ fun main() {
         if (string.length > 1)
             mainAnagramCount += variableDigitAnagramCount(string)
 
-        println(mainAnagramCount)
+        println("count: $mainAnagramCount \n")
     }
 }
